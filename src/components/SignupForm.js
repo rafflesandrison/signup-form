@@ -43,6 +43,10 @@ class SignupForm extends React.Component {
         return false;
     }
 
+    handleFocus(e) {
+        this.setState({submitSuccess: false});
+    }
+
     handleChange(field, e) {
         let fields = this.state.fields;
         let errors = this.state.errors;
@@ -114,6 +118,7 @@ class SignupForm extends React.Component {
                         placeholder="name@example.com" 
                         value={this.state.fields.email} 
                         onChange={this.handleChange.bind(this, "email")}
+                        onFocus={this.handleFocus.bind(this)}
                     />
                         <p className="error-message">{this.hasError("email") ? this.state.errors["email"] : ""}</p>
                     <Form.Control 
@@ -122,6 +127,7 @@ class SignupForm extends React.Component {
                         placeholder="first name" 
                         value={this.state.fields.firstName} 
                         onChange={this.handleChange.bind(this, "firstName")}
+                        onFocus={this.handleFocus.bind(this)}
                     />
                     <p className="error-message">{this.hasError("firstName") ? this.state.errors["firstName"] : ""}</p>
 
