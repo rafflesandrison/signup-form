@@ -11,8 +11,14 @@ class SignupForm extends React.Component {
                 firstName: "",
                 password: "",
             },
-            errors: {}
+            errors: {
+                email: "",
+                firstName: ""
+            },
+            submitSuccess: false
         }
+
+        this.hasError = this.hasError.bind(this);
     }
 
     generatePassword(str) {
@@ -28,11 +34,27 @@ class SignupForm extends React.Component {
         }
         return retVal;
     }
+    hasError(type) {
+        for (var key in this.state.errors) {
+            if (key === type && this.state.errors[key].length > 0)
+                return true;
+        }
+        
+        return false;
+    }
 
     handleChange(field, e) {
         let fields = this.state.fields;
+        let errors = this.state.errors;
+
         fields[field] = e.target.value;
-        this.setState({fields})
+        errors[field] = "";
+
+        let state = {
+            fields,
+            errors
+        }
+        this.setState({state})
     }
 
     handleClick(e) {
@@ -51,12 +73,29 @@ class SignupForm extends React.Component {
         if (fields["firstName"] === "")
             errors["firstName"] = "Please tell us your name";
         
-
-        // generate password
+        this.setState({errors})
+        if (this.hasError("email") || this.hasError("firstName")) {
+            console.log("Has errors...")
+            console.log(errors);
+            return;
+        }
+         
+        // generate password - to be sent to prospect via email
+        // reduce 1 step in signup process
         fields["password"] = this.generatePassword(fields.email);
-        console.log(fields)
+        
+        // send email to prospect
+        // <CODE GOES HERE>
 
-        return;
+        for (var key in fields)
+            fields[key] = "";
+        
+        for (var key in errors)
+            errors[key] = "";
+
+        this.setState({submitSuccess: true});
+        
+        console.log(fields)
     }
 
     render() {
@@ -69,11 +108,30 @@ class SignupForm extends React.Component {
                     <Form.Text className="signup-sub-title">
                         Join 153 companies in improving mental wellness for your workforce.
                     </Form.Text>
-                    <Form.Control className="input-field" type="email" placeholder="name@example.com" value={this.state.fields.email} onChange={this.handleChange.bind(this, "email")}/>
-                    <Form.Control className="input-field" type="text" placeholder="first name" value={this.state.fields.firstName} onChange={this.handleChange.bind(this, "firstName")}/>
+                    <Form.Control 
+                        className={`input-field`}
+                        type="email" 
+                        placeholder="name@example.com" 
+                        value={this.state.fields.email} 
+                        onChange={this.handleChange.bind(this, "email")}
+                    />
+                        <p className="error-message">{this.hasError("email") ? this.state.errors["email"] : ""}</p>
+                    <Form.Control 
+                        className="input-field" 
+                        type="text" 
+                        placeholder="first name" 
+                        value={this.state.fields.firstName} 
+                        onChange={this.handleChange.bind(this, "firstName")}
+                    />
+                    <p className="error-message">{this.hasError("firstName") ? this.state.errors["firstName"] : ""}</p>
+
                 </Form.Group>
 
-                <Button className="claim-btn" variant="primary" type="submit" onClick={this.handleClick.bind(this)}>
+                <div className={`success-message ` + (!this.state.submitSuccess ? `display-none` : ``)}  >
+                    <p>Hooray! Your free trial is on the way. Please check your email for more info.</p>
+                    <p>In the mean time, check out our <a href="#">articles</a>. We think you'll love them.</p>
+                </div>
+                <Button className="claim-btn" variant="warning" type="submit" onClick={this.handleClick.bind(this)}>
                     <span className="claim-btn-name">Free Trial</span>
                 </Button>
           </Form>

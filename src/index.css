@@ -37,10 +37,24 @@ code {
   width: 100%;
 }
 
+.claim-btn {
+  background-color: #ea6227;
+}
+
 .claim-btn span {
   font-weight: bold;
 }
 
 .signup-form .input-field {
   margin-bottom: 8px;
+}
+
+.signup-form .error-message {
+  text-align: left;
+  padding-left: 12px;
+  color: red;
+}
+
+.display-none {
+  display: none;
 }
