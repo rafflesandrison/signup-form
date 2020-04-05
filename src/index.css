@@ -11,3 +11,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.signup-form {
+  width: 50%;
+  border-radius: 5px;
+  margin: 24px auto 24px auto;
+  padding: 24px 10% 24px 10%;
+  background-color: #f8ceec;
+  background-image: linear-gradient(315deg, #f8ceec 0%, #a88beb 74%);
+}
+
+.signup-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #222831;
+}
+
+.signup-sub-title {
+  font-size: 20px;
+  color: #393E46;
+  margin-bottom: 16px; 
+}
+
+.claim-btn {
+  width: 100%;
+}
+
+.claim-btn span {
+  font-weight: bold;
+}
+
+.signup-form .input-field {
+  margin-bottom: 8px;
+}
